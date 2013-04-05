@@ -1,9 +1,48 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Customer:</b>
-  <%= @order.customer_id %>
-</p>
+<h3>
+  Order #<%= @order.id %> &ndash; <%= @order.customer_name %> <%=number_to_phone @order.customer_phone %>
+</h3>
+
+<h4>
+  <%= @order.payment_method %> <%= @order.cheque_number %>
+</h4>
+
+
+<%=form_for LineItem.new, {url: order_line_items_path(@order)} do |f| %>
+  <%= f.select :plant_id, options_from_collection_for_select(Plant.order(:name).all, "id", "for_select") %>
+  <%= f.text_field :quantity %>
+  <%= f.submit 'Add' %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Plant</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.line_items.each do |item| %>
+      <tr>
+        <td><%= item.plant.name %></td>
+        <td><%= number_to_currency(item.price/100.0) %></td>
+        <td><%= item.quantity %></td>
+        <td class="money"><%= number_to_currency(item.subtotal) %></td>
+        <td><%= link_to 'Remove', order_line_item_path(@order,item), confirm: 'Are you sure?', method: :delete %></td>
+      </tr>    
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">Total</td>
+      <td class="money"><%= number_to_currency(@order.total) %></td>
+    </tr>
+  </tfoot>
+</table>
 
 
 <%= link_to 'Edit', edit_order_path(@order) %> |

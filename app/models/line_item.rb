@@ -3,4 +3,13 @@ class LineItem < ActiveRecord::Base
   
   belongs_to :order
   belongs_to :plant
+  
+  def subtotal
+    quantity * (price/100.0)
+  end
+  
+  before_create :set_price
+  def set_price
+    self.price = self.plant.price
+  end
 end

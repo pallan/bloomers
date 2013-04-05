@@ -1,21 +1,41 @@
-<h1>Listing orders</h1>
+<h1>Orders</h1>
 
-<table>
-  <tr>
-    <th>Customer</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<table class="table">
+  <thead> 
+     <tr>
+      <th>Order #</th>
+      <th>Status</th>
+      <th>Customer</th>
+      <th></th>
+      <th>Paid By</th>
+      <th>Plants</th>
+      <th>Total</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
 
 <% @orders.each do |order| %>
-  <tr>
-    <td><%= order.customer_id %></td>
-    <td><%= link_to 'Show', order %></td>
-    <td><%= link_to 'Edit', edit_order_path(order) %></td>
-    <td><%= link_to 'Destroy', order, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td><%= link_to order.id, order %></td>
+      <td><%= order.status %></td>
+      <td><%= order.customer_name %></td>
+      <td><%= number_to_phone order.customer_phone %></td>
+      <td><%= order.payment_method %> <%= order.cheque_number %></td>
+      <td><%= order.line_items.count %></td>
+      <td class="money"><%= number_to_currency order.total %></td>
+      <td><%= link_to image_tag('magnifier.png'), order %> <%= link_to image_tag('pencil.png'), edit_order_path(order) %> <%= link_to image_tag('delete.png'), order, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+  </tbody>
 <% end %>
+  <tfoot>
+    <tr>
+      <td colspan="4">Total</td>
+      <td class="money"><%= number_to_currency(@orders.inject(0){|x, o| x + o.total }) %></td>
+    </tr>
+  </tfoot>
 </table>
 
 <br />

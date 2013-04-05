@@ -1,4 +1,17 @@
 Bloomers::Application.routes.draw do
+
+  get "reports/index"
+  get "reports/product_count"
+
+  resources :customers
+  resources :plants
+  resources :orders do
+    get :product_counts, :on => :collection
+    resources :line_items
+  end
+  
+  root :to => 'orders#index'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

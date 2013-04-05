@@ -1,11 +1,11 @@
-<h1>Listing customers</h1>
+<h1>Customers</h1>
 
-<table>
+<p><%= link_to 'New Customer', new_customer_path %></p>
+
+<table class="table">
   <tr>
     <th>Name</th>
     <th>Phone</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
@@ -13,13 +13,10 @@
   <tr>
     <td><%= customer.name %></td>
     <td><%= customer.phone %></td>
-    <td><%= link_to 'Show', customer %></td>
-    <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
-    <td><%= link_to 'Destroy', customer, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', customer %> | <%= link_to 'Edit', edit_customer_path(customer) %> | <%= link_to 'Destroy', customer, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Customer', new_customer_path %>

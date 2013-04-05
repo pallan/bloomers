@@ -1,50 +1,14 @@
 class LineItemsController < ApplicationController
-  # GET /line_items
-  # GET /line_items.json
-  def index
-    @line_items = LineItem.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @line_items }
-    end
-  end
-
-  # GET /line_items/1
-  # GET /line_items/1.json
-  def show
-    @line_item = LineItem.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @line_item }
-    end
-  end
-
-  # GET /line_items/new
-  # GET /line_items/new.json
-  def new
-    @line_item = LineItem.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @line_item }
-    end
-  end
-
-  # GET /line_items/1/edit
-  def edit
-    @line_item = LineItem.find(params[:id])
-  end
 
   # POST /line_items
   # POST /line_items.json
   def create
-    @line_item = LineItem.new(params[:line_item])
+    @order = Order.find(params[:order_id])
+    @line_item = @order.line_items.build(params[:line_item])
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item, notice: 'Line item was successfully created.' }
+        format.html { redirect_to order_path(@order), notice: 'Line item was successfully created.' }
         format.json { render json: @line_item, status: :created, location: @line_item }
       else
         format.html { render action: "new" }
@@ -72,11 +36,12 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
-    @line_item = LineItem.find(params[:id])
+    @order = Order.find(params[:order_id])
+    @line_item = @order.line_items.find(params[:id])
     @line_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to line_items_url }
+      format.html { redirect_to order_path(@order), notice: 'Line item was successfully created.' }
       format.json { head :no_content }
     end
   end

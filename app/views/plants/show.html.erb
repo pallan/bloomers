@@ -1,3 +1,5 @@
+<h1>Plant Details</h1>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -7,9 +9,36 @@
 
 <p>
   <b>Price:</b>
-  <%= @plant.price %>
+  <%= number_to_currency(@plant.price/100.0) %>
 </p>
 
+<p><strong>Open Orders</strong></p>
+
+<table class="table">
+  <thead> 
+     <tr>
+      <th>Order #</th>
+      <th>Status</th>
+      <th>Customer</th>
+      <th></th>
+      <th>Quantity</th>
+      <th></th>
+    </tr>
+  </thead>
+
+<% @plant.orders.where(:status => 'open').each do |order| %>
+  <tbody>
+    <tr>
+      <td><%= link_to order.id, order %></td>
+      <td><%= order.status %></td>
+      <td><%= order.customer_name %></td>
+      <td><%= number_to_phone order.customer_phone %></td>
+      <td><%= order.line_items.where(:plant_id => @plant.id).first.quantity %></td>
+      <td><%= link_to image_tag('magnifier.png'), order %></td>
+    </tr>
+  </tbody>
+<% end %>
+</table>
 
 <%= link_to 'Edit', edit_plant_path(@plant) %> |
-<%= link_to 'Back', plants_path %>
+<%= link_to 'Back to List', plants_path %>
