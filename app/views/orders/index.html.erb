@@ -1,6 +1,8 @@
 <h1>Orders</h1>
 
-<table class="table">
+<p><%= link_to 'New Order', new_order_path %></p>
+
+<table class="table table-striped">
   <thead> 
      <tr>
       <th>Order #</th>
@@ -26,7 +28,17 @@
       <td><%= order.payment_method %> <%= order.cheque_number %></td>
       <td><%= order.line_items.count %></td>
       <td class="money"><%= number_to_currency order.total %></td>
-      <td><%= link_to image_tag('magnifier.png'), order %> <%= link_to image_tag('pencil.png'), edit_order_path(order) %> <%= link_to image_tag('delete.png'), order, confirm: 'Are you sure?', method: :delete %></td>
+      <td>
+        <%= link_to order do %>
+          <i class="icon-search"></i>
+        <% end %>
+        <%= link_to edit_order_path(order) do %>
+          <i class="icon-edit"></i>
+        <% end %>
+        <%= link_to order, confirm: 'Are you sure?', method: :delete do %>
+          <i class="icon-trash"></i>
+        <% end %>
+      </td>
     </tr>
   </tbody>
 <% end %>
@@ -40,4 +52,3 @@
 
 <br />
 
-<%= link_to 'New Order', new_order_path %>
