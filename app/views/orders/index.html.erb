@@ -19,9 +19,8 @@
       <th></th>
     </tr>
   </thead>
-
-<% @orders.each do |order| %>
   <tbody>
+<% @orders.each do |order| %>
     <tr>
       <td><%= link_to order.id, order %></td>
       <td><%= order.status %></td>
@@ -44,8 +43,8 @@
         <% end %>
       </td>
     </tr>
-  </tbody>
 <% end %>
+  </tbody>
   <tfoot>
     <tr>
       <td class="money" colspan="6">Total</td>
