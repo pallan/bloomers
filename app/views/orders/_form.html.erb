@@ -38,6 +38,13 @@
   </div>
 
   <div class="control-group">
+    <%= f.label :payment_amount, nil, {class: 'control-label'} %>
+    <div class="controls">
+      $<%= f.text_field :payment_amount %>
+    </div>
+  </div>
+
+  <div class="control-group">
     <%= f.label :status, nil, {class: 'control-label'} %>
     <div class="controls">  
       <%= f.select :status, Order::STATUS %>

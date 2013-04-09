@@ -38,8 +38,19 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="3">Total</td>
+      <td class="money" colspan="3">Subtotal</td>
       <td class="money"><%= number_to_currency(@order.total) %></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="money" colspan="3">Paid</td>
+      <td class="money"><%= number_to_currency(@order.payment_amount) %></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="money" colspan="3">Balance</td>
+      <td class="money"><span class="balance"><%= number_to_currency(@order.balance) %></span></td>
+      <td></td>
     </tr>
   </tfoot>
 </table>

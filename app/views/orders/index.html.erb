@@ -12,6 +12,8 @@
       <th>Paid By</th>
       <th>Plants</th>
       <th>Total</th>
+      <th>Paid</th>
+      <th>Balance</th>
       <th></th>
       <th></th>
       <th></th>
@@ -28,6 +30,8 @@
       <td><%= order.payment_method %> <%= order.cheque_number %></td>
       <td><%= order.line_items.count %></td>
       <td class="money"><%= number_to_currency order.total %></td>
+      <td class="money"><%= number_to_currency order.payment_amount %></td>
+      <td class="money"><span class="balance"><%= number_to_currency order.balance %></span></td>
       <td>
         <%= link_to order do %>
           <i class="icon-search"></i>
@@ -44,7 +48,7 @@
 <% end %>
   <tfoot>
     <tr>
-      <td colspan="4">Total</td>
+      <td class="money" colspan="6">Total</td>
       <td class="money"><%= number_to_currency(@orders.inject(0){|x, o| x + o.total }) %></td>
     </tr>
   </tfoot>
