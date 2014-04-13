@@ -10,7 +10,7 @@
 
 
 <%=form_for LineItem.new, {url: group_order_line_items_path(@group,@order)} do |f| %>
-  <%= f.select :plant_id, options_from_collection_for_select(Plant.order(:name).all, "id", "for_select"), {}, {class: 'span5'} %>
+  <%= f.select :plant_id, options_from_collection_for_select(Plant.order(:name).active, "id", "for_select"), {}, {class: 'span5'} %>
   <%= f.text_field :quantity, class: 'span1' %>
   <%= f.submit 'Add', class: 'btn btn-primary' %>
 <% end %>
