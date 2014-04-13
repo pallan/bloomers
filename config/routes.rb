@@ -5,9 +5,11 @@ Bloomers::Application.routes.draw do
 
   resources :customers
   resources :plants
-  resources :orders do
-    get :product_counts, :on => :collection
-    resources :line_items
+  resources :groups do
+    resources :orders do
+      get :product_counts, :on => :collection
+      resources :line_items
+    end
   end
   
   root :to => 'orders#index'

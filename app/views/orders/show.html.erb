@@ -9,10 +9,10 @@
 </h4>
 
 
-<%=form_for LineItem.new, {url: order_line_items_path(@order)} do |f| %>
-  <%= f.select :plant_id, options_from_collection_for_select(Plant.order(:name).all, "id", "for_select") %>
-  <%= f.text_field :quantity %>
-  <%= f.submit 'Add' %>
+<%=form_for LineItem.new, {url: group_order_line_items_path(@group,@order)} do |f| %>
+  <%= f.select :plant_id, options_from_collection_for_select(Plant.order(:name).all, "id", "for_select"), {}, {class: 'span5'} %>
+  <%= f.text_field :quantity, class: 'span1' %>
+  <%= f.submit 'Add', class: 'btn btn-primary' %>
 <% end %>
 
 <table class="table">
@@ -32,7 +32,7 @@
         <td><%= number_to_currency(item.price/100.0) %></td>
         <td><%= item.quantity %></td>
         <td class="money"><%= number_to_currency(item.subtotal) %></td>
-        <td><%= link_to 'Remove', order_line_item_path(@order,item), confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= link_to 'Remove', group_order_line_item_path(@group, @order,item), confirm: 'Are you sure?', method: :delete %></td>
       </tr>    
     <% end %>
   </tbody>
@@ -56,5 +56,5 @@
 </table>
 
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<%= link_to 'Edit', edit_group_order_path(@group,@order) %> |
+<%= link_to 'Back', group_orders_path %>

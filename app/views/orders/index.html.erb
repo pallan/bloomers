@@ -1,6 +1,6 @@
-<h1>Orders</h1>
+<h1><%= @group.label.titleize %> Orders</h1>
 
-<p><%= link_to 'New Order', new_order_path %></p>
+<p><%= link_to 'New Order', new_group_order_path(@group), class: 'btn btn-success' %></p>
 
 <table class="table table-striped">
   <thead> 
@@ -22,7 +22,7 @@
   <tbody>
 <% @orders.each do |order| %>
     <tr>
-      <td><%= link_to order.id, order %></td>
+      <td><%= link_to order.id, group_order_path(@group, order) %></td>
       <td><%= order.status %></td>
       <td><%= order.customer_name %></td>
       <td><%= number_to_phone order.customer_phone %></td>
@@ -32,13 +32,13 @@
       <td class="money"><%= number_to_currency order.payment_amount %></td>
       <td class="money"><span class="balance"><%= number_to_currency order.balance %></span></td>
       <td>
-        <%= link_to order do %>
+        <%= link_to group_order_path(@group, order) do %>
           <i class="icon-search"></i>
         <% end %>
-        <%= link_to edit_order_path(order) do %>
+        <%= link_to edit_group_order_path(@group, order) do %>
           <i class="icon-edit"></i>
         <% end %>
-        <%= link_to order, confirm: 'Are you sure?', method: :delete do %>
+        <%= link_to group_order_path(@group, order), confirm: 'Are you sure?', method: :delete do %>
           <i class="icon-trash"></i>
         <% end %>
       </td>
@@ -49,6 +49,7 @@
     <tr>
       <td class="money" colspan="6">Total</td>
       <td class="money"><%= number_to_currency(@orders.inject(0){|x, o| x + o.total }) %></td>
+      <td colspan="3"></td>
     </tr>
   </tfoot>
 </table>

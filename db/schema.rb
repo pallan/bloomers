@@ -11,11 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409224318) do
+ActiveRecord::Schema.define(:version => 20140413141538) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
     t.string   "phone"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.string   "label"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -31,15 +37,18 @@ ActiveRecord::Schema.define(:version => 20130409224318) do
 
   create_table "orders", :force => true do |t|
     t.integer  "customer_id"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at",                                                                 :null => false
+    t.datetime "updated_at",                                                                 :null => false
     t.string   "customer_name"
     t.string   "customer_phone"
     t.string   "payment_method"
     t.integer  "cheque_number"
     t.string   "status",         :limit => 15
-    t.decimal  "payment_amount",               :default => 0.0
+    t.decimal  "payment_amount",               :precision => 10, :scale => 0, :default => 0
+    t.integer  "group_id"
   end
+
+  add_index "orders", ["group_id"], :name => "index_orders_on_group_id"
 
   create_table "plants", :force => true do |t|
     t.string   "name"
