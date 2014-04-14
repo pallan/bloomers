@@ -29,12 +29,12 @@
 <% @plant.orders.where(:status => 'open').each do |order| %>
   <tbody>
     <tr>
-      <td><%= link_to order.id, order %></td>
+      <td><%= link_to order.id, group_order_path(order.group, order) %></td>
       <td><%= order.status %></td>
       <td><%= order.customer_name %></td>
       <td><%= number_to_phone order.customer_phone %></td>
       <td><%= order.line_items.where(:plant_id => @plant.id).first.quantity %></td>
-      <td><%= link_to image_tag('magnifier.png'), order %></td>
+      <td><%= link_to image_tag('magnifier.png'), group_order_path(order.group, order) %></td>
     </tr>
   </tbody>
 <% end %>
