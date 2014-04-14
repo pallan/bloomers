@@ -4,6 +4,8 @@
 #
 
 $ ->
+  $('#line_item_plant_id').select2()
+
   $('span.balance').each (index,span) =>
     amount = parseFloat($(span).first().text().replace('$','')) 
     if (amount > 0)
