@@ -9,13 +9,15 @@ class ReportsController < ApplicationController
         csv_string =  CSV.generate do |csv|
                         csv << ['Plant', 'Count']
 
-                        LineItem.includes(:order).where("orders.status='open'").group(:plant_id).sum(:quantity).each do |id,c|
+                        line_item_relation = LineItem.includes(:order).where("orders.status='open'").group(:plant_id)
+                        line_item_relation = line_item_relation.where("orders.group_id = ?", params[:group_id]) if params[:group_id]
+                        line_item_relation.sum(:quantity).each do |id,c|
                           plant = Plant.find(id)
                           csv << [plant.name,c]
                         end
                       end
-        
-        send_data csv_string, 
+
+        send_data csv_string,
                   :type => 'text/csv; charset=iso-8859-1; header=present', 
                   :disposition => "attachment; filename=product_count.csv" 
       end
