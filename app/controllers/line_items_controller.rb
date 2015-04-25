@@ -12,7 +12,7 @@ class LineItemsController < ApplicationController
         format.html { redirect_to group_order_path(@order.group, @order), notice: 'Line item was successfully created.' }
         format.json { render json: @line_item, status: :created, location: @line_item }
       else
-        format.html { render action: "new" }
+        format.html { render group_order_path(@order.group, @order), error: "Line item could not be saved." }
         format.json { render json: @line_item.errors, status: :unprocessable_entity }
       end
     end
