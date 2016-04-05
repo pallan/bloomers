@@ -1,5 +1,5 @@
 class Plant < ActiveRecord::Base
-  attr_accessible :name, :price, :active
+  # attr_accessible :name, :price, :active
   
   scope :active, -> { where(active: true) }
 
