@@ -5,7 +5,7 @@ set :application, 'bloomers'
 set :repo_url, 'git@github.com:pallan/bloomers.git'
 
 # Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
+set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
 set :linked_files, %w{config/database.yml config/secrets.yml}
 set :linked_dirs, %w{bin log tmp vendor/bundle public/system public/uploads}
