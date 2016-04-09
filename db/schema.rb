@@ -9,53 +9,60 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140417002913) do
+ActiveRecord::Schema.define(version: 20160409155719) do
 
-  create_table "customers", :force => true do |t|
-    t.string   "name"
-    t.string   "phone"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "groups", :force => true do |t|
-    t.string   "label"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "customers", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "phone",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "line_items", :force => true do |t|
-    t.integer  "order_id"
-    t.integer  "plant_id"
-    t.integer  "quantity"
-    t.integer  "price"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "groups", force: :cascade do |t|
+    t.string   "label",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "orders", :force => true do |t|
-    t.integer  "customer_id"
-    t.datetime "created_at",                                                                   :null => false
-    t.datetime "updated_at",                                                                   :null => false
-    t.string   "customer_name"
-    t.string   "customer_phone"
-    t.string   "payment_method"
-    t.integer  "cheque_number"
-    t.string   "status",         :limit => 15
-    t.decimal  "payment_amount",               :precision => 10, :scale => 2, :default => 0.0, :null => false
-    t.integer  "group_id"
+  create_table "line_items", force: :cascade do |t|
+    t.integer  "order_id",   limit: 4
+    t.integer  "plant_id",   limit: 4
+    t.integer  "quantity",   limit: 4
+    t.integer  "price",      limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
-  add_index "orders", ["group_id"], :name => "index_orders_on_group_id"
+  create_table "orders", force: :cascade do |t|
+    t.integer  "customer_id",    limit: 4
+    t.datetime "created_at",                                                        null: false
+    t.datetime "updated_at",                                                        null: false
+    t.string   "customer_name",  limit: 255
+    t.string   "customer_phone", limit: 255
+    t.string   "payment_method", limit: 255
+    t.integer  "cheque_number",  limit: 4
+    t.string   "status",         limit: 15
+    t.decimal  "payment_amount",             precision: 10, scale: 2, default: 0.0, null: false
+    t.integer  "group_id",       limit: 4
+  end
 
-  create_table "plants", :force => true do |t|
-    t.string   "name"
-    t.integer  "price"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.boolean  "active",     :default => true
+  add_index "orders", ["group_id"], name: "index_orders_on_group_id", using: :btree
+
+  create_table "plants", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.integer  "price",       limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "active",                  default: true
+    t.integer  "category_id", limit: 4
   end
 
 end

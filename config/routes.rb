@@ -4,6 +4,7 @@ Bloomers::Application.routes.draw do
   get "reports/product_count"
 
   resources :customers
+  resources :categories
   resources :plants
   resources :groups do
     resources :orders do

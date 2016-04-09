@@ -8,6 +8,11 @@
 </p>
 
 <p>
+  <b>Category:</b>
+  <%= @plant.category.try(:name) %>
+</p>
+
+<p>
   <b>Price:</b>
   <%= number_to_currency(@plant.price/100.0) %>
 </p>

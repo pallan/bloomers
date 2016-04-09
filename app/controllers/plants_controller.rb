@@ -2,7 +2,7 @@ class PlantsController < ApplicationController
   # GET /plants
   # GET /plants.json
   def index
-    @plants = Plant.order('name').all
+    @plants = Plant.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -84,7 +84,7 @@ class PlantsController < ApplicationController
   private
 
   def plant_params
-    params.require(:plant).permit(:name, :price, :active)
+    params.require(:plant).permit(:name, :category_id, :price, :active)
   end
 
 end
