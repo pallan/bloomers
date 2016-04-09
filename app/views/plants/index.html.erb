@@ -3,22 +3,29 @@
 <p><%= link_to 'New Plant', new_plant_path, class: 'btn btn-success' %></p>
 
 <table class="table">
-  <tr>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Ordered</th>
-    <th>Active</th>
-    <th></th>
-  </tr>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Ordered</th>
+      <th>Active</th>
+      <th></th>
+    </tr>
+  </thead>
 
-<% @plants.each do |plant| %>
-  <tr>
-    <td><%= link_to plant.name, plant %></td>
-    <td><%= number_to_currency(plant.price/100.0) %></td>
-    <td><%= plant.line_items.includes(:order).where("orders.status='open'").sum(:quantity) %></td>
-    <td><%= plant.active %></td>
-    <td><%= link_to image_tag('magnifier.png'), plant %> <%= link_to image_tag('pencil.png'), edit_plant_path(plant) %> <%= link_to image_tag('delete.png'), plant, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<% @plants.group_by{|g| g.category_id }.each do |category_id, plants| %>
+  <tr><th colspan="5"><%= category_id ? Category.find(category_id).try(:name) : "Unknown" %></th></tr>
+  <% plants.each do |plant| %>
+    <tbody>
+      <tr>
+        <td><%= link_to plant.name, plant %></td>
+        <td><%= number_to_currency(plant.price/100.0) %></td>
+        <td><%= plant.line_items.includes(:order).where("orders.status='open'").sum(:quantity) %></td>
+        <td><%= plant.active %></td>
+        <td><%= link_to image_tag('magnifier.png'), plant %> <%= link_to image_tag('pencil.png'), edit_plant_path(plant) %> <%= link_to image_tag('delete.png'), plant, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+    </tbody>
+  <% end %>
 <% end %>
 </table>
 

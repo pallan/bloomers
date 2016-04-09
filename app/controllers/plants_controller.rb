@@ -2,7 +2,7 @@ class PlantsController < ApplicationController
   # GET /plants
   # GET /plants.json
   def index
-    @plants = Plant.all
+    @plants = Plant.includes(:category).order('categories.name, plants.name').all
 
     respond_to do |format|
       format.html # index.html.erb
