@@ -40,7 +40,7 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    @group = Group.new(params[:group])
+    @group = Group.new(group_params)
 
     respond_to do |format|
       if @group.save
@@ -59,7 +59,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
 
     respond_to do |format|
-      if @group.update_attributes(params[:group])
+      if @group.update_attributes(group_params)
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,4 +80,11 @@ class GroupsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def group_params
+    params.require(:group).permit(:label)
+  end
+
 end

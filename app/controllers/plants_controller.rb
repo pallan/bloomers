@@ -40,7 +40,7 @@ class PlantsController < ApplicationController
   # POST /plants
   # POST /plants.json
   def create
-    @plant = Plant.new(params[:plant])
+    @plant = Plant.new(plant_params)
 
     respond_to do |format|
       if @plant.save
@@ -59,7 +59,7 @@ class PlantsController < ApplicationController
     @plant = Plant.find(params[:id])
 
     respond_to do |format|
-      if @plant.update_attributes(params[:plant])
+      if @plant.update_attributes(plant_params)
         format.html { redirect_to @plant, notice: 'Plant was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,4 +80,11 @@ class PlantsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def plant_params
+    params.require(:plant).permit(:name, :price, :active)
+  end
+
 end

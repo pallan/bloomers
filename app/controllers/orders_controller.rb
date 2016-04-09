@@ -41,8 +41,8 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = @group.orders.build(params[:order])
-    
+    @order = @group.orders.build(order_params)
+
     respond_to do |format|
       if @order.save
         format.html { redirect_to [@group, @order], notice: 'Order was successfully created.' }
@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
   def update
 
     respond_to do |format|
-      if @order.update_attributes(params[:order])
+      if @order.update_attributes(order_params)
         format.html { redirect_to [@group, @order], notice: 'Order was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,7 +80,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  protected
+  private
 
   def set_group
     # quick & dirty fix for the home page which will not have and id set
@@ -94,4 +94,9 @@ class OrdersController < ApplicationController
   def set_order
     @order = @group.orders.find(params[:id])
   end
+
+  def order_params
+    params.require(:order).permit(:customer_name, :customer_phone, :payment_method, :cheque_number, :payment_amount, :status)
+  end
+
 end
