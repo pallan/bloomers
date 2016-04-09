@@ -14,4 +14,8 @@ class Order < ActiveRecord::Base
   def balance
     total - payment_amount
   end
+
+  def number
+    "#{group.label}-#{id}"
+  end
 end
